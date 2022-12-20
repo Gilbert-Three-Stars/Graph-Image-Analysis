@@ -11,8 +11,7 @@ def pixelIsAPoint(pixel, pixelColors):
 
 def pixelColorMatch(p1, p2):
     for i in range(0, len(p1)):
-        if(abs(p1[i]-p2[i]) > 10):
-            return False
+        if(abs(p1[i]-p2[i]) > 10): return False
     return True    
 
 def detectPoints(image, pointsClr):
