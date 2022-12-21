@@ -27,5 +27,5 @@ def detectPoints(image: Image, pointsClr: list[list[int]]) -> list[list[int]]:
     for i in range(0, len(pixelArr)):
         for j in range(0, len(pixelArr[i])):
             if(pixelIsAPoint(pixelArr[i][j],pointsClr)):
-                pointLocationArr.append([i,j])
+                pointLocationArr.append([j,imgHeight-i])
     return pointLocationArr
