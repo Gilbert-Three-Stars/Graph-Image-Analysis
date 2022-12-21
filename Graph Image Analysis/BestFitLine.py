@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-import math
 np.set_printoptions(threshold=sys.maxsize)
 
 # The Theil-Sen Estimator is a way of finding the line of best fit.
@@ -14,7 +13,7 @@ np.set_printoptions(threshold=sys.maxsize)
 # In Sen's definition, one takes the median of the slopes defined 
 # only from pairs of points having distinct x coordinates"
 # https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
-def findSlopeMedian(pointsArr):
+def findSlopeMedian(pointsArr: list[list[int]]) -> float:
     # going to have to loop through the pointsArr
     # in a nested loop in order to get every combination of slope.
     slopeArr = []
@@ -26,24 +25,20 @@ def findSlopeMedian(pointsArr):
                 slopeArr.append(slope)
     # Now we have an array of all of the slopes. We must determine the median.
     slopeArr.sort() # O(n^2)log(n^2) since the slopeArr is of length n^2 ((n/2)*n) to be precise.
-    if(len(slopeArr)%2 != 0):
-        return slopeArr[math.floor(len(slopeArr)/2)]
-    return float((slopeArr[math.floor(len(slopeArr)/2)] + slopeArr[math.floor((len(slopeArr)/2)-1)])/2)
+    return np.median(slopeArr)
 # "Once the slope m has been determined, 
 # one may determine a line from the sample points 
 # by setting the y-intercept b to be the median of the values yi − mxi"
 # https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
-def findIntercept(pointsArr, slope):
+def findIntercept(pointsArr: list[list[int]], slope: float) -> float:
     interceptArr = []
     for point in pointsArr:
         interceptArr.append(float(point[1] - (slope * point[0])))
     interceptArr.sort()
-    if(len(interceptArr)%2 != 0):
-        return interceptArr[math.floor(len(interceptArr)/2)]
-    return float((interceptArr[math.floor(len(interceptArr)/2)] + interceptArr[math.floor((len(interceptArr)/2)-1)])/2)
+    return np.median(interceptArr)
 
 # returns the line of best fit in the format [slope, intercept]
-def getLine(pointsArr):
+def getLine(pointsArr: list[list[int]]) -> list[float]:
     slope = findSlopeMedian(pointsArr)
     return [slope, findIntercept(pointsArr, slope)]
     
